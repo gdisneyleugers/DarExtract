@@ -1,0 +1,32 @@
+#!/bin/bash
+
+dmg=$1
+dir=`basename $dmg .dmg`
+PKG_DIR="*/Packages"
+if echo $dmg | grep $dmg; then
+pkg="*.pkg"
+rm -fr $dir
+mkdir $dir
+fi
+cd $dir
+7z x ../$dmg
+7z x *.hfs
+cd $PKG_DIR
+touch *.pkg
+for pkg in $pkg; do
+if echo $pkg | grep $pkg; then
+mkdir $pkg.tmp
+folder=$pkg.tmp
+script="Scripts"
+scripts="Scripts~*"
+archive="Payload"
+payload="Payload~*"
+7z x -y $pkg -o$folder
+7z x  $folder/$archive -aou -o$folder
+7z x  $folder/$script -aou -o$folder
+7z x  $folder/$payload -aou -o$dir
+7z x  $folder/$scripts -aou -o$dir
+fi 
+done
+mv $dir ~/$dir.decomp
+echo "basename installed"
