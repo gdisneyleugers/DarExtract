@@ -30,4 +30,4 @@ fi
 done
 rm ~/$dir.decomp
 mv $dir ~/$dir.decomp
-echo "extracted to ~/$dir.decomp"
+echo "$basename extracted to ~/$dir.decomp"
